@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>കാലാവസ്ഥ വെബ് ആപ്പ്</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background: #222;
+            /* background-image: url('https://source.unsplash.com/1600x900/?landscape'); */
+            font-size: 100%;
+        }
+        
+        .card {
+            background: rgba(0, 0, 0, 0.30);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(11.5px);
+            -webkit-backdrop-filter: blur(11.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: white;
+            padding: 2em;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 420px;
+            margin: 1em;
+            overflow: hidden;
+        }
+        
+        .search {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button {
+            margin: 0.5em;
+            border-radius: 15px;
+            border: none;
+            height: 44px;
+            width: 80px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+        
+        input.search-bar {
+            border: none;
+            outline: none;
+            padding: 0.4em 1em;
+            border-radius: 24px;
+            background: rgba(0, 0, 0, 0.30);
+            color: white;
+            font-family: inherit;
+            font-size: 105%;
+            width: calc(100% - 100px);
+        }
+        
+        button:hover {
+            background: #7c7c7c6b;
+        }
+        
+        h1.temp {
+            margin: 0;
+            margin-bottom: 0.4em;
+        }
+        
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+        
+        .description {
+            text-transform: capitalize;
+            margin-left: 8px;
+        }
+        
+        .weather.loading {
+            visibility: hidden;
+            max-height: 20px;
+            position: relative;
+        }
+        
+        .weather.loading:after {
+            visibility: visible;
+            content: "ലോഡ് ചെയ്യുന്നു...";
+            color: white;
+            position: absolute;
+            top: 0;
+            left: 20px;
+        }
+        
+        .js-tilt-glare {
+            border-radius: 10px;
+        }
+        
+        a {
+            margin-top: 7%;
+            color: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+    </style>
+</head>
+<body>
+   <div class="card">
+    <h1 style="text-align: center;">നിങ്ങളുടെ നഗരത്തിന്റെ പേര് നൽകുക</h1>
+    <div class="search">
+        <input type="text" class="search-bar" placeholder="നഗരത്തിന്റെ പേര്..." id="cityname" value="" autofocus>
+        <button id="searchbtn">ശോധിക്കുക</button>
+    </div>
+
+    <div class="weather">
+        <h2 class="city" id="city"></h2>
+        <h1 class="temp" id="temp"></h1>
+        <div class="flex">
+            <img src="" alt="" class="icon" id="weather-icon">
+            <div class="description" id="description"></div>
+        </div>
+        <div class="humidity" id="humidity"></div>
+        <div class="wind" id="wind"></div>
+    </div>
+
+   </div>
+
+    <script>
+        let input = document.getElementById('cityname');
+        let searchbtn = document.getElementById('searchbtn');
+        let cityNameElement = document.getElementById('city');
+        let temp = document.getElementById('temp');
+        let description = document.getElementById('description');
+        let humidity = document.getElementById('humidity');
+        let wind = document.getElementById('wind');
+        let weatherIcon = document.getElementById('weather-icon');
+        let apiinfo = [];
+
+        // https://api.openweathermap.org/data/2.5/weather?q=delhi&appid=3ba0e5eedae49070b51c85ad8c30def0&units=metric
+
+        const apicall = async (cityName) => {
+            let api = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=3ba0e5eedae49070b51c85ad8c30def0&units=metric`;
+            try {
+                const response = await fetch(api);
+                const json = await response.json();
+                apiinfo.push(json);
+                if (apiinfo[0].cod == 404) {
+                    cityNameElement.textContent = 'നഗരം കണ്ടെത്തിയില്ല';
+                    return;
+                }
+                cityNameElement.textContent = `${cityName} ൽ കാലാവസ്ഥ`;
+                console.log(apiinfo);
+                temp.textContent = `${apiinfo[0].main.temp}°C`;
+                description.textContent = `${apiinfo[0].weather[0].description}`;
+                humidity.textContent = `ആർദ്രത: ${apiinfo[0].main.humidity}`;
+                wind.textContent = `കാറ്റിന്റെ വേഗം: ${apiinfo[0].wind.speed} കിമി/മണിക്കൂർ`;
+
+                const iconCode = json.weather[0].icon;
+                const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
+                weatherIcon.src = iconUrl;
+
+            } catch (error) {
+                console.log('ഡാറ്റ നേടുന്നതിൽ പിശക്', error);
+            }
+        }
+
+        searchbtn.addEventListener('click', () => {
+            let cityname = input.value.toLowerCase();
+            apicall(cityname);
+            input.value = '';
+            input.focus();
+        });
+    </script>
+</body>
+</html>

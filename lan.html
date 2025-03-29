@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative; /* Position relative for the pseudo-element */
+            overflow: hidden; /* Prevent overflow */
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+        }
+
+        /* Pseudo-element for glowing background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            filter: blur(30px); /* Blur effect for glow */
+            z-index: -1; /* Send it to the back */
+        }
+
+        /* Star effect */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 1.5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Generate stars with increased size */
+        .star:nth-child(1) { top: 20%; left: 10%; width: 4px; height: 4px; animation-duration: 1.2s; }
+        .star:nth-child(2) { top: 30%; left: 25%; width: 5px; height: 5px; animation-duration: 1.5s; }
+        .star:nth-child(3) { top: 15%; left: 50%; width: 3px; height: 3px; animation-duration: 1.8s; }
+        .star:nth-child(4) { top: 40%; left: 70%; width: 4.5px; height: 4.5px; animation-duration: 1.3s; }
+        .star:nth-child(5) { top: 60%; left: 80%; width: 2px; height: 2px; animation-duration: 1.6s; }
+        .star:nth-child(6) { top: 70%; left: 15%; width: 4px; height: 4px; animation-duration: 1.4s; }
+        .star:nth-child(7) { top: 80%; left: 50%; width: 5px; height: 5px; animation-duration: 1.7s; }
+        .star:nth-child(8) { top: 90%; left: 30%; width: 3px; height: 3px; animation-duration: 1.2s; }
+        .star:nth-child(9) { top: 10%; left: 80%; width: 4px; height: 4px; animation-duration: 1.5s; }
+        .star:nth-child(10) { top: 50%; left: 90%; width: 2px; height: 2px; animation-duration: 1.3s; }
+
+        .language-selector {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            transform: translateY(-20px);
+            animation: slideIn 0.5s ease forwards; /* Slide-in effect for the selector */
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            text-shadow: 0 0 15px rgba(0, 123, 255, 0.8), 0 0 30px rgba(0, 123, 255, 0.5); /* Blue glow effect */
+            animation: bounce 1s infinite; /* Bounce effect for the heading */
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .language-option {
+            margin: 10px 0;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            font-size: 18px;
+            transition: background-color 0.3s, text-shadow 0.3s, transform 0.3s; /* Added transform transition */
+            text-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Initial blue glow */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            text-shadow: 0 0 20px rgba(0, 123, 255, 0.8), 0 0 40px rgba(0, 123, 255, 0.5); /* Enhanced blue glow on hover */
+            transform: scale(1.05); /* Scale effect on hover */
+        }
+    </style>
+</head>
+<body>
+
+<div class="language-selector">
+    <h1>Select Your Language</h1>
+    <div class="language-option">
+        <a href="http://localhost/GDG-REPO/Gujarati/index.php"><button onclick="selectLanguage('Gujarati')">ગુજરાતી</button></a>
+    </div>
+    <div class="language-option">
+        <a href="http://localhost/GDG-REPO/English/index.php"><button onclick="selectLanguage('English')">English</button></a>
+    </div>
+    <div class="language-option">
+        <a href="http://localhost/GDG-REPO/Hindi/index.php"><button onclick="selectLanguage('Hindi')">हिन्दी</button></a>
+    </div>
+    <div class="language-option">
+        <a href="http://localhost/GDG-REPO/Marathi/index.php"><button onclick="selectLanguage('Marathi')">मराठी</button></a>
+    </div>
+    <div class="language-option">
+        <a href="http://localhost/GDG-REPO/Tamil/index.php"><button onclick="selectLanguage('Tamil')">தமிழ்</button></a>
+    </div>
+    <div class="language-option">
+        <a href="http://localhost/GDG-REPO/Telugu/index.php"><button onclick="selectLanguage('Telugu')">తెలుగు</button></a>
+    </div>
+    <div class="language-option">
+        <a href="http://localhost/GDG-REPO/Malyalam/index.php"><button onclick="selectLanguage('Malayalam')">മലയാളം</button></a>
+    </div>
+    <div class="language-option">
+        <a href="http://localhost/GDG-REPO/Bangoli/index.php"><button onclick="selectLanguage('Bengoli')">বাংলা</button></a>
+    </div>
+</div>
+
+<!-- Star elements -->
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+
+<script>
+    function selectLanguage(language) {
+        alert("You have selected: " + language);
+        // Here you can add code to redirect to the respective language page or load content in the selected language
+    }
+</script>
+
+</body>
+</html>

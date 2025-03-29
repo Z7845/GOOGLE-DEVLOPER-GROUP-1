@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>निकटतम कूल्ड स्टोरेज शोधा</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #e0f7e9, #ffffff);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #location-info, #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px);
+            max-width: 300px;
+        }
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>निकटतम कूल्ड स्टोरेज शोधा</h1>
+    <button id="getLocationBtn">माझा स्थान मिळवा</button>
+    <div id="location-info">
+        <p>अक्षांश: <span id="latitude"></span></p>
+        <p>रेखांश: <span id="longitude"></span></p>
+        <p id="error-message" style="color: red;"></p>
+    </div>
+    <script>
+        const getLocationBtn = document.getElementById('getLocationBtn');
+        const latitudeSpan = document.getElementById('latitude');
+        const longitudeSpan = document.getElementById('longitude');
+        const errorMessage = document.getElementById('error-message');
+
+        getLocationBtn.addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                errorMessage.textContent = "हा ब्राउझर जिओलोकेशनला समर्थन करत नाही.";
+            }
+        });
+
+        function showPosition(position) {
+            latitudeSpan.textContent = position.coords.latitude;
+            longitudeSpan.textContent = position.coords.longitude;
+            errorMessage.textContent = ""; // पूर्वीच्या त्रुटी संदेशांना साफ करा
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage.textContent = "उपयोगकर्त्याने जिओलोकेशनची विनंती नाकारली.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage.textContent = "स्थान माहिती उपलब्ध नाही.";
+                    break;
+                case error.TIMEOUT:
+                    errorMessage.textContent = "उपयोगकर्त्याचे स्थान मिळवण्यासाठीची विनंती वेळ संपली.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    errorMessage.textContent = "एक अज्ञात त्रुटी झाली.";
+                    break;
+            }
+        }
+    </script>
+
+    <script>
+        const EARTH_RADIUS = 6371.0;
+
+        function toRadians(degree) {
+            return degree * (Math.PI / 180.0);
+        }
+
+        function haversine(lat1, lon1, lat2, lon2) {
+            lat1 = toRadians(lat1);
+            lon1 = toRadians(lon1);
+            lat2 = toRadians(lat2);
+            lon2 = toRadians(lon2);
+
+            const dlat = lat2 - lat1;
+            const dlon = lon2 - lon1;
+            const a = Math.sin(dlat / 2) ** 2 +
+                      Math.cos(lat1) * Math.cos(lat2) *
+                      Math.sin(dlon / 2) ** 2;
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            return EARTH_RADIUS * c;
+        }
+
+        function findNearestColdStorage() {
+            const userLat = parseFloat(document.getElementById("latitude").value);
+            const userLon = parseFloat(document.getElementById("longitude").value);
+
+            const coldStorageLocations = [
+                { name: "कूल्ड स्टोरेज A", lat: 40.748817, lon: -73.985428 },
+                { name: "कूल्ड स्टोरेज B", lat: 34.052235, lon: -118.243683 },
+                { name: "कूल्ड स्टोरेज C", lat: 51.507351, lon: -0.127758 }
+            ];
+
+            let nearestDistance = Infinity;
+            let nearestStorage = "";
+
+            coldStorageLocations.forEach(storage => {
+                const distance = haversine(userLat, userLon, storage.lat, storage.lon);
+                console.log(`दूरी ${storage.name} पर्यंत: ${distance.toFixed(2)} किमी`);
+
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestStorage = storage.name;
+                }
+            });
+
+            if (nearestStorage) {
+                document.getElementById("result").innerText = 
+                    `निकटतम कूल्ड स्टोरेज आहे ${nearestStorage}, जे ${nearestDistance.toFixed(2)} किमी दूर आहे.`;
+            } else {
+                document.getElementById("result").innerText = "कोणतेही कूल्ड स्टोरेज स्थान सापडले नाही.";
+            }
+        }
+    </script>
+    <h1>निकटतम कूल्ड स्टोरेज शोधा</h1>
+    <label for="latitude">आपला अक्षांश प्रविष्ट करा:</label>
+    <input type="text" id="latitude" required>
+    <br>
+    <label for="longitude">आपला रेखांश प्रविष्ट करा:</label>
+    <input type="text" id="longitude" required>
+    <br>
+    <button onclick="findNearestColdStorage()">निकटतम कूल्ड स्टोरेज शोधा</button>
+    <p id="result"></p>
+</body>
+</html>

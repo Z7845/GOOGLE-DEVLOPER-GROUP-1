@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>అధికారిక కూల్ స్టోరేజ్ లోకేటర్</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #e0f7e9, #ffffff);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #location-info, #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px);
+            max-width: 300px;
+        }
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>అధికారిక కూల్ స్టోరేజ్ లోకేటర్</h1>
+    <button id="getLocationBtn">నా స్థానం పొందండి</button>
+    <div id="location-info">
+        <p>అక్షాంశం: <span id="latitude"></span></p>
+        <p>రేఖాంశం: <span id="longitude"></span></p>
+        <p id="error-message" style="color: red;"></p>
+    </div>
+    <script>
+        const getLocationBtn = document.getElementById('getLocationBtn');
+        const latitudeSpan = document.getElementById('latitude');
+        const longitudeSpan = document.getElementById('longitude');
+        const errorMessage = document.getElementById('error-message');
+
+        getLocationBtn.addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                errorMessage.textContent = "ఈ బ్రౌజర్ జియోలోకేషన్‌ను మద్దతు ఇవ్వడం లేదు.";
+            }
+        });
+
+        function showPosition(position) {
+            latitudeSpan.textContent = position.coords.latitude;
+            longitudeSpan.textContent = position.coords.longitude;
+            errorMessage.textContent = ""; // పూర్వపు పొరపాట్లను తొలగించండి
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage.textContent = "వినియోగదారు జియోలోకేషన్ అభ్యర్థనను తిరస్కరించాడు.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage.textContent = "స్థానం సమాచారం అందుబాటులో లేదు.";
+                    break;
+                case error.TIMEOUT:
+                    errorMessage.textContent = "వినియోగదారుని స్థానం పొందడానికి అభ్యర్థన కాలం ముగిసింది.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    errorMessage.textContent = "ఒక తెలియని పొరపాటు జరిగింది.";
+                    break;
+            }
+        }
+    </script>
+
+    <script>
+        const EARTH_RADIUS = 6371.0;
+
+        function toRadians(degree) {
+            return degree * (Math.PI / 180.0);
+        }
+
+        function haversine(lat1, lon1, lat2, lon2) {
+            lat1 = toRadians(lat1);
+            lon1 = toRadians(lon1);
+            lat2 = toRadians(lat2);
+            lon2 = toRadians(lon2);
+
+            const dlat = lat2 - lat1;
+            const dlon = lon2 - lon1;
+            const a = Math.sin(dlat / 2) ** 2 +
+                      Math.cos(lat1) * Math.cos(lat2) *
+                      Math.sin(dlon / 2) ** 2;
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            return EARTH_RADIUS * c;
+        }
+
+        function findNearestColdStorage() {
+            const userLat = parseFloat(document.getElementById("latitude").value);
+            const userLon = parseFloat(document.getElementById("longitude").value);
+
+            const coldStorageLocations = [
+                { name: "కూల్ స్టోరేజ్ A", lat: 40.748817, lon: -73.985428 },
+                { name: "కూల్ స్టోరేజ్ B", lat: 34.052235, lon: -118.243683 },
+                { name: "కూల్ స్టోరేజ్ C", lat: 51.507351, lon: -0.127758 }
+            ];
+
+            let nearestDistance = Infinity;
+            let nearestStorage = "";
+
+            coldStorageLocations.forEach(storage => {
+                const distance = haversine(userLat, userLon, storage.lat, storage.lon);
+                console.log(`${storage.name} కు దూరం: ${distance.toFixed(2)} కిమీ`);
+
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestStorage = storage.name;
+                }
+            });
+
+            if (nearestStorage) {
+                document.getElementById("result").innerText = 
+                    `నికరంగా కూల్ స్టోరేజ్ ${nearestStorage} గా ఉంది, ఇది ${nearestDistance.toFixed(2)} కిమీ దూరంలో ఉంది.`;
+            } else {
+                document.getElementById("result").innerText = "ఏ కూల్ స్టోరేజ్ స్థానం అందుబాటులో లేదు.";
+            }
+        }
+    </script>
+    <h1>అధికారిక కూల్ స్టోరేజ్ లోకేటర్</h1>
+    <label for="latitude">మీ అక్షాంశాన్ని నమోదు చేయండి:</label>
+    <input type="text" id="latitude" required>
+    <br>
+    <label for="longitude">మీ రేఖాంశాన్ని నమోదు చేయండి:</label>
+    <input type="text" id="longitude" required>
+    <br>
+    <button onclick="findNearestColdStorage()">నికరంగా కూల్ స్టోరేజ్ కనుగొనండి</button>
+    <p id="result"></p>
+</body>
+</html>

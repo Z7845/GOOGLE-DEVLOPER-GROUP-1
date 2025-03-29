@@ -1,0 +1,421 @@
+ /* General Styling */
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1, h2 {
+    color: #0f4e05;
+    text-align: center;
+}
+
+p {
+    color: #4a3f3ffd;
+    font-size: 1.1em;
+    text-align: center;
+}
+       
+/* Navigation Bar */
+header {
+    background-color: #3b964e;
+    padding: 10px 0;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #6ccf48;
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+}
+/* Language Selection Dropdown */
+#language-select {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    font-size: 1em;
+}
+/* Section Styles */
+section {
+    padding: 40px 20px;
+    margin-bottom: 20px;
+}
+
+section h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+/* Form Styling */
+form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+label, select, input, button {
+    font-size: 1.1em;
+    margin: 10px;
+}
+
+select, input {
+    padding: 10px;
+    width: 250px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2ecc71;
+}
+
+/* Map Section */
+#cold-storage-map {
+    background-color: #ecf0f1;
+    padding: 20px;
+    margin-top: 10px;
+    font-size: 1em;
+    text-align: center;
+}
+
+/* Weather Section */
+#weather-info {
+    background-color: #ecf0f1;
+    padding: 20px;
+    margin-top: 10px;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+/* Pest Alerts */
+#pest-alerts div {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Chatbot Section */
+#chatbot-box {
+    background-color: #ecf0f1;
+    padding: 20px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#chatbot-box input {
+    padding: 10px;
+    width: 60%;
+    margin-right: 10px;
+}
+
+#chatbot-box button {
+    padding: 10px 20px;
+    background-color: #622b25;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#chatbot-box button:hover {
+    background-color: #7c3939;
+}
+
+#chat-response {
+    margin-top: 20px;
+    background-color: #ecf0f1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.1em;
+}
+
+/* Footer */
+footer {
+    background-color: #05321b;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .hero h1 {
+        font-size: 2em;
+    }
+
+    .hero p {
+        font-size: 1.2em;
+    }
+
+    nav ul {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    .chatbot-box input {
+        width: 80%;
+    }
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+#farming-techniques {
+    background-color: #ffffff;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#farming-techniques h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #2980b9;
+    padding-bottom: 10px;
+}
+#farming-techniques p {
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+#farming-techniques ul {
+    list-style: none;
+    padding: 0;
+}
+#farming-techniques li {
+    background: #ecf0f1;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
+#farming-techniques li:hover {
+    background: #bdc3c7;
+}
+#farming-techniques ul li ul {
+    margin-left: 20px;
+}
+#farming-techniques ul li ul li {
+    background: #ffffff;
+    border-left: 3px solid #3498db;
+    margin-bottom: 5px;
+}
+#farming-techniques ul li ul li:hover {
+    background: #ecf0f1;
+}
+#farming-techniques ul li ul li p {
+    margin: 5px 0;
+}
+#pesticide {
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    border: 1px solid #e1e1e1;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: auto;
+    max-width: 600px;
+}
+
+#pesticide h2 {
+    color: #2c3e50;
+    text-align: center;
+}
+
+#pesticide p {
+    font-size: 18px;
+    text-align: center;
+    color: #34495e;
+}
+
+#pesticide h3 { 
+    color: #27ae60;
+}
+
+#pesticide ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#pesticide ul li {
+    background-color: #ecf0f1;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#pesticide button {
+    display: block;
+    width: 100%;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#pesticide button:hover {
+    background-color: #2980b9;
+}
+#pest-alerts {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#pest-alerts h2 {
+    color: #343a40;
+    text-align: center;
+}
+
+#pest-alerts input[type="text"],
+#pest-alerts input[type="datetime-local"] {
+    width: calc(100% - 22px);
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#pest-alerts button {
+    width: 100%;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#pest-alerts button:hover {
+    background-color: #0056b3;
+}
+
+
+nav ul li {
+    display: inline-block;
+    margin-right: 15px;
+    position: relative;
+}
+
+nav ul li a {
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    color: #000;
+    transition: color 0.3s ease-in-out;
+}
+
+nav ul li a::after {
+    content: '';
+    display: block;
+    height: 3px;
+    background: #dc0404;
+    transition: width 0.3s ease-in-out;
+    position: absolute;
+    width: 0;
+    left: 0;
+    bottom: 0;
+}
+
+nav ul li a:hover {
+    color: #dc0404;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+/* Add this to your CSS file or within a <style> tag in your HTML */
+
+section#tractor-rental {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+section#tractor-rental h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+section#tractor-rental p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+section#tractor-rental label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+section#tractor-rental select,
+section#tractor-rental input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+section#tractor-rental button {
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+section#tractor-rental button:hover {
+    background-color: #2980b9;
+}
+
